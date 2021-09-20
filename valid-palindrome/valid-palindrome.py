@@ -7,3 +7,10 @@ class Solution:
         if s == s[::-1]:
             return True
         return False
+    
+    '''
+    s = s.lower()
+    s = re.sub('[^a-zA-Z0-9]', '', s)
+    
+    return s == s[::-1]
+    '''
