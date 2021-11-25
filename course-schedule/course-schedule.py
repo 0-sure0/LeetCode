@@ -1,42 +1,33 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        graph = collections.defaultdict(list)
-        for x, y in prerequisites:
-            graph[x].append(y)
+        coursedict = defaultdict(list)
+        for cur, pre in prerequisites:
+            coursedict[cur].append(pre)
         
-        visited = set()
-        traced = set()
-        
-        def dfs(i):
-            if i in traced:
+        def isCyclic(current):
+            if checked[current]:
                 return False
-            if i in visited:
+            if path[current]:
                 return True
+            path[current] = True
+            ret = False
+            for child in coursedict[current]:
+                ret = isCyclic(child)
+                if ret:
+                    break
             
-            traced.add(i)
-            
-            for y in graph[i]:
-                if not dfs(y):
-                    return False
-            
-            traced.remove(i)
-            visited.add(i)
-            
-            return True
+            checked[current] = True
+            path[current] = False
+            return ret
         
-            
-        for x in list(graph):
-            if not dfs(x):
+        
+        checked = [False] * numCourses
+        path = [False] * numCourses
+        
+        for i in range(numCourses):
+            if isCyclic(i):
                 return False
         
         return True
                     
-            
-        
-        
-                
-            
-        
-        
-            
             
