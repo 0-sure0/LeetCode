@@ -1,22 +1,7 @@
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        counter = collections.Counter(tasks)
-        result = 0
+        tasks_count = Counter(tasks)
         
-        while True:
-            sub_cnt = 0
-            print(counter.most_common(n+1), '\n-----\n')
-            for task, _ in counter.most_common(n + 1):
-                sub_cnt += 1
-                result += 1
-                
-                counter.subtract(task)
-                counter += collections.Counter()
-            
-            if not counter:
-                break
-                
-            result += n - sub_cnt + 1
-        
-        return result
-        
+        max_task_count = max(tasks_count.values())
+        num_max_tasks = list(tasks_count.values()).count(max_task_count)
+        return max((max_task_count - 1) * (n + 1) + num_max_tasks, len(tasks))
