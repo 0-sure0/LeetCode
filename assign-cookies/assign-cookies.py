@@ -3,16 +3,11 @@ class Solution:
         g.sort()
         s.sort()
         ans = 0
-
-        l, r = 0, 0
-        while True:
-            if l > len(g) - 1 or r > len(s) - 1:
-                break
-            if g[l] <= s[r]:
+        
+        for i in s:
+            idx = bisect.bisect_right(g, i)
+            if idx > ans:
                 ans += 1
-                r += 1
-                l += 1
-            else:
-                r += 1
-
+        
         return ans
+        
