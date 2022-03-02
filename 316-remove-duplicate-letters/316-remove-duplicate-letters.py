@@ -1,12 +1,16 @@
 class Solution:
     def removeDuplicateLetters(self, s: str) -> str:
-        result = ''
+        counter, checked, stk = collections.Counter(s), set(), []
         
-        while s:
-            i = min(map(s.rindex, set(s)))
-            c = min(s[:i+1])
-            result += c
-            s = s[s.index(c):].replace(c, '')
-        
-        return result
+        for char in s:
+            counter[char] -= 1
+            if char in checked:
+                continue
             
+            while stk and stk[-1] > char and counter[stk[-1]] > 0:
+                checked.remove(stk.pop())
+            
+            stk.append(char)
+            checked.add(char)
+        
+        return ''.join(stk)            
