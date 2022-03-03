@@ -1,22 +1,19 @@
 class MyHashMap:
 
     def __init__(self):
-        self.hashmap = {}
+        self.arr = [None] * 100000
 
     def put(self, key: int, value: int) -> None:
-        self.hashmap[key] = value
-
+        self.arr[key % 100000] = value
+        return        
+        
     def get(self, key: int) -> int:
-        try:
-            return self.hashmap[key]
-        except KeyError:
+        if self.arr[key % 100000] == None:
             return -1
+        return self.arr[key % 100000]
 
     def remove(self, key: int) -> None:
-        try:
-            del self.hashmap[key]
-        except KeyError:
-            return
+        self.arr[key % 100000] = None
 
 # Your MyHashMap object will be instantiated and called as such:
 # obj = MyHashMap()
